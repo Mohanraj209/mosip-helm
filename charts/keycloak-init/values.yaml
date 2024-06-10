@@ -602,8 +602,26 @@ keycloak:
                - view-clients
                - view-realm
                - manage-users
+      users:
+        - username: readuser
+          email: read_user15@xyz.com
+          firstName: read
+          lastName: User
+          password: mosip123
+          temporary: False
+          attributes: {}
+          realmRoles:
+            - offline_access
+            - uma_authorization
+          client: "realm-management"
+          clientRoles:
+            - "view-users"
+            - "view-authorization"
+            - "view-clients"
+            - "view-events"
+            - "view-realm"
+            - "view-identity-providers"
 
-      users: []
 
 ## These will be passed as environments variables to keycloak-init docker. Note the expected naming convention is
 ## <clientname>_<secret>.  If empty secret is passed, it shall be randomly generated
