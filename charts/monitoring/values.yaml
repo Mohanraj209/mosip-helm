@@ -19,7 +19,7 @@ prometheus-adapter:
 ##
 rkeControllerManager:
   enabled: false
-  metricsPort: 10257 # default to secure port as of k8s >= 1.22
+  metricsPort: 10257     # default to secure port as of k8s >= 1.22
   component: kube-controller-manager
   clients:
     https:
@@ -38,7 +38,7 @@ rkeControllerManager:
   kubeVersionOverrides:
   - constraint: "< 1.22"
     values:
-      metricsPort: 10252 # default to insecure port in k8s < 1.22
+      metricsPort: 10252       # default to insecure port in k8s < 1.22
       clients:
         https:
           enabled: false
@@ -66,7 +66,7 @@ rkeScheduler:
   kubeVersionOverrides:
   - constraint: "< 1.23"
     values:
-      metricsPort: 10251 # default to insecure port in k8s < 1.23
+      metricsPort: 10251        # default to insecure port in k8s < 1.23
       clients:
         https:
           enabled: false
@@ -245,7 +245,7 @@ kubeAdmEtcd:
 ##
 rke2ControllerManager:
   enabled: false
-  metricsPort: 10257 # default to secure port as of k8s >= 1.22
+  metricsPort: 10257         # default to secure port as of k8s >= 1.22
   component: kube-controller-manager
   clients:
     https:
@@ -264,7 +264,7 @@ rke2ControllerManager:
   kubeVersionOverrides:
   - constraint: "< 1.22"
     values:
-      metricsPort: 10252 # default to insecure port in k8s < 1.22
+      metricsPort: 10252        # default to insecure port in k8s < 1.22
       clients:
         https:
           enabled: false
@@ -292,7 +292,7 @@ rke2Scheduler:
   kubeVersionOverrides:
   - constraint: "< 1.22"
     values:
-      metricsPort: 10251 # default to insecure port in k8s < 1.22
+      metricsPort: 10251         # default to insecure port in k8s < 1.22
       clients:
         https:
           enabled: false
@@ -480,14 +480,12 @@ rke2IngressNginx:
       service:
         selector: false
 
-
-
 ## Additional PushProx Monitoring
 ## ref: https://github.com/rancher/charts/tree/dev-v2.5-source/packages/rancher-pushprox
 ##
 
 # hardenedKubelet can only be deployed if kubelet.enabled=true
-# If enabled, it replaces the ServiceMonitor deployed by the default kubelet option with a 
+# If enabled, it replaces the ServiceMonitor deployed by the default kubelet option with a
 # PushProx-based exporter that does not require a host port to be open to scrape metrics.
 hardenedKubelet:
   enabled: false
@@ -533,7 +531,7 @@ hardenedKubelet:
         targetLabel: metrics_path
 
 # hardenedNodeExporter can only be deployed if nodeExporter.enabled=true
-# If enabled, it replaces the ServiceMonitor deployed by the default nodeExporter with a 
+# If enabled, it replaces the ServiceMonitor deployed by the default nodeExporter with a
 # PushProx-based exporter that does not require a host port to be open to scrape metrics.
 hardenedNodeExporter:
   enabled: false
@@ -583,7 +581,7 @@ ingressNginx:
   ## The namespace to search for your nginx-ingress-controller
   ##
   namespace: ingress-nginx
-  
+
   service:
     port: 9913
     targetPort: 10254
@@ -737,9 +735,9 @@ global:
   seLinux:
     enabled: false
   kubectl:
-     repository: rancher/kubectl
-     tag: v1.20.2
-     pullPolicy: IfNotPresent
+    repository: rancher/kubectl
+    tag: v1.20.2
+    pullPolicy: IfNotPresent
   rbac:
     ## Create RBAC resources for ServiceAccounts and users
     ##
@@ -1244,7 +1242,6 @@ alertmanager:
     #       requests:
     #         storage: 50Gi
     #     selector: {}
-
 
     ## The external URL the Alertmanager instances will be available under. This is necessary to generate correct URLs. This is necessary if Alertmanager is not served from root of a DNS name. string  false
     ##
@@ -3445,9 +3442,9 @@ prometheus:
     #     - role: node
     #   scheme: https
     #   tls_config:
-    #     ca_file:   /etc/prometheus/secrets/etcd-client-cert/etcd-ca
+    #     ca_file: /etc/prometheus/secrets/etcd-client-cert/etcd-ca
     #     cert_file: /etc/prometheus/secrets/etcd-client-cert/etcd-client
-    #     key_file:  /etc/prometheus/secrets/etcd-client-cert/etcd-client-key
+    #     key_file: /etc/prometheus/secrets/etcd-client-cert/etcd-client-key
     #   relabel_configs:
     #   - action: labelmap
     #     regex: __meta_kubernetes_node_label_(.+)
@@ -3480,7 +3477,6 @@ prometheus:
     #    {{end}}
     #    relabel_configs:
     #    ...
-
 
     ## If additional scrape configurations are already deployed in a single secret file you can use this section.
     ## Expected values are the secret name and key
@@ -3575,7 +3571,7 @@ prometheus:
 
     ## Containers allows injecting additional containers. This is meant to allow adding an authentication proxy to a Prometheus pod.
     ## if using proxy extraContainer update targetPort with proxy container port
-    containers:  |
+    containers: |
       - name: prometheus-proxy
         args:
         - nginx
@@ -3652,7 +3648,6 @@ prometheus:
     ## number of targets under the desired limit. Note that if TargetLimit is lower, that value will be taken instead, except
     ## if either value is zero, in which case the non-zero value will be used. If both values are zero, no limit is enforced.
     enforcedTargetLimit: false
-
 
     ## Per-scrape limit on number of labels that will be accepted for a sample. If more than this number of labels are present
     ## post metric-relabeling, the entire scrape will be treated as failed. 0 means no limit. Only valid in Prometheus versions
