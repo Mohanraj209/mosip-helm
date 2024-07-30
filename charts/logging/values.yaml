@@ -72,8 +72,6 @@ rbac:
     ## Ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#seccomp
     ## Ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#sysctl
 
-
-
 ## SecurityContext holds pod-level security attributes and common container settings.
 ## This defaults to non-root user with uid 1000 and gid 2000.	*v1.PodSecurityContext	false
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
