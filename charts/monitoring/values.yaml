@@ -4183,3 +4183,35 @@ thanosRuler:
 ## Setting to true produces cleaner resource names, but requires a data migration because the name of the persistent volume changes. Therefore this should only be set once on initial installation.
 ##
 cleanPrometheusOperatorObjectNames: false
+
+## Configure extra options for startup, liveness and readiness probes
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes
+startupProbe:
+  enabled: true
+  tcpSocket:
+    port: tcp
+  initialDelaySeconds: 0
+  periodSeconds: 30
+  timeoutSeconds: 5
+  failureThreshold: 10
+  successThreshold: 1
+
+readinessProbe:
+  enabled: true
+  tcpSocket:
+    port: tcp
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+
+livenessProbe:
+  enabled: true
+  tcpSocket:
+    port: tcp
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
