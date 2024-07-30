@@ -3,8 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "logging-operator.fullname" . }}
   namespace: {{ include "logging-operator.namespace" . }}
-  labels:
-{{ include "logging-operator.labels" . | indent 4 }}
+  labels: {{ include "logging-operator.labels" . | indent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -35,24 +34,22 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ template "system_default_registry" . }}{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           args:
-          {{- range .Values.extraArgs }}
-            - {{ . }}
-          {{- end }}
+            - --enable-leader-election=true
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{ - if .Values.startupProbe.enabled }}
+          startupProbe: {{ - omit .Values.startupProbe "enabled" | toYaml | nindent 12 }}
+          {{ - end }}
+          {{ - if .Values.livenessProbe.enabled }}
+          livenessProbe: { { - omit .Values.livenessProbe "enabled" | toYaml | nindent 12 }}
+          {{ - end }}
+          {{ - if .Values.readinessProbe.enabled }}
+          readinessProbe: {{ - omit .Values.readinessProbe "enabled" | toYaml | nindent 12 }}
+          {{ - end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           ports:
             - name: http
               containerPort: {{ .Values.http.port }}
-          { { - if .Values.startupProbe.enabled } }
-          startupProbe: { { - omit .Values.startupProbe "enabled" | toYaml | nindent 12 } }
-          { { - end } }
-          { { - if .Values.livenessProbe.enabled } }
-          livenessProbe: { { - omit .Values.livenessProbe "enabled" | toYaml | nindent 12 } }
-          { { - end } }
-          { { - if .Values.readinessProbe.enabled } }
-          readinessProbe: { { - omit .Values.readinessProbe "enabled" | toYaml | nindent 12 } }
-          { { - end } }
           {{- with .Values.env }}
           env: {{ toYaml . | nindent 12 }}
           {{- end }}
