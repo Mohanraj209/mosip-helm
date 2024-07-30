@@ -24,64 +24,64 @@ spec:
       {{- toYaml . | nindent 8 }}
     {{-  end }}
     spec:
-    {{- if .Values.priorityClassName }}
-    priorityClassName: {{ .Values.priorityClassName }}
-    {{- end }}
-    {{- with .Values.imagePullSecrets }}
-    imagePullSecrets:
-      {{- toYaml . | nindent 8 }}
-    {{- end }}
-    containers:
-      - name: {{ .Chart.Name }}
-        image: "{{ template "system_default_registry" . }}{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        args:
-        {{- range .Values.extraArgs }}
-        - {{ . }}
+      {{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName }}
+      {{- end }}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ template "system_default_registry" . }}{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          args:
+          {{- range .Values.extraArgs }}
+          - {{ . }}
+          {{- end }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.startupProbe.enabled }}
+          startupProbe: {{- omit .Values.startupProbe "enabled" | toYaml | nindent 12 }}
+          {{- end }}
+          {{- if .Values.livenessProbe.enabled }}
+          livenessProbe: {{- omit .Values.livenessProbe "enabled" | toYaml | nindent 12 }}
+          {{- end }}
+          {{- if .Values.readinessProbe.enabled }}
+          readinessProbe: {{- omit .Values.readinessProbe "enabled" | toYaml | nindent 12 }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.http.port }}
+          {{- with .Values.env }}
+          env: {{ toYaml . | nindent 12 }}
+          {{- end }}
+          {{- if .Values.securityContext }}
+          securityContext: {{ toYaml .Values.securityContext | nindent 12 }}
+          {{- end }}
+        {{- with .Values.volumeMounts }}
+        volumeMounts: {{ toYaml . | nindent 12 }}
         {{- end }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-        {{- if .Values.startupProbe.enabled }}
-        startupProbe: {{- omit .Values.startupProbe "enabled" | toYaml | nindent 12 }}
-        {{- end }}
-        {{- if .Values.livenessProbe.enabled }}
-        livenessProbe: {{- omit .Values.livenessProbe "enabled" | toYaml | nindent 12 }}
-        {{- end }}
-        {{- if .Values.readinessProbe.enabled }}
-        readinessProbe: {{- omit .Values.readinessProbe "enabled" | toYaml | nindent 12 }}
-        {{- end }}
-        resources:
-          {{- toYaml .Values.resources | nindent 12 }}
-        ports:
-          - name: http
-            containerPort: {{ .Values.http.port }}
-        {{- with .Values.env }}
-        env: {{ toYaml . | nindent 12 }}
-        {{- end }}
-        {{- if .Values.securityContext }}
-        securityContext: {{ toYaml .Values.securityContext | nindent 12 }}
-        {{- end }}
-      {{- with .Values.volumeMounts }}
-      volumeMounts: {{ toYaml . | nindent 12 }}
+
+      {{- with .Values.volumes }}
+      volumes: {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.podSecurityContext }}
+      securityContext: {{ toYaml .Values.podSecurityContext | nindent 8 }}
       {{- end }}
 
-    {{- with .Values.volumes }}
-    volumes: {{ toYaml . | nindent 8 }}
-    {{- end }}
-    {{- if .Values.podSecurityContext }}
-    securityContext: {{ toYaml .Values.podSecurityContext | nindent 8 }}
-    {{- end }}
-
-    {{- with .Values.nodeSelector }}
-    nodeSelector:
-      {{- toYaml . | nindent 8 }}
-    {{- end }}
-    {{- with .Values.affinity }}
-    affinity:
-      {{- toYaml . | nindent 8 }}
-    {{- end }}
-    {{- with .Values.tolerations }}
-    tolerations:
-      {{- toYaml . | nindent 8 }}
-    {{- end }}
-    {{- if .Values.rbac.enabled }}
-    serviceAccountName: {{ include "logging-operator.fullname" . }}
-    {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.rbac.enabled }}
+      serviceAccountName: {{ include "logging-operator.fullname" . }}
+      {{- end }}
