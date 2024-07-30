@@ -233,37 +233,33 @@ fluentbit:
 # settings above will be overridden. Any fields that collide with fields set in the files in `templates/loggings` will
 # be ignored.
 
-## Configure extra options for liveness and readiness probes
-## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
-##
+## Configure extra options for startup, liveness and readiness probes
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes
 startupProbe:
   enabled: true
-  httpGet:
-    path: /v1/packetcreator/actuator/health
-    port: 8080
+  tcpSocket:
+    port: tcp
   initialDelaySeconds: 0
-  periodSeconds: 20
+  periodSeconds: 30
   timeoutSeconds: 5
-  failureThreshold: 60
+  failureThreshold: 10
   successThreshold: 1
 
-livenessProbe:
+readinessProbe:
   enabled: true
-  httpGet:
-    path: /v1/packetcreator/actuator/health
-    port: 8080
-  initialDelaySeconds: 20
+  tcpSocket:
+    port: tcp
+  initialDelaySeconds: 5
   periodSeconds: 10
   timeoutSeconds: 5
   failureThreshold: 6
   successThreshold: 1
 
-readinessProbe:
+livenessProbe:
   enabled: true
-  httpGet:
-    path: /v1/packetcreator/actuator/health
-    port: 8080
-  initialDelaySeconds: 0
+  tcpSocket:
+    port: tcp
+  initialDelaySeconds: 30
   periodSeconds: 10
   timeoutSeconds: 5
   failureThreshold: 6
