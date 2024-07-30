@@ -273,7 +273,7 @@ rke2ControllerManager:
 
 rke2Scheduler:
   enabled: false
-  metricsPort: 10259 # default to secure port as of k8s >= 1.22
+  metricsPort: 10259       # default to secure port as of k8s >= 1.22
   component: kube-scheduler
   clients:
     https:
