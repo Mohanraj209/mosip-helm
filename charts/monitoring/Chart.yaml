@@ -24,6 +24,7 @@ appVersion: 0.59.1
 dependencies:
 - condition: grafana.enabled
   name: grafana
+  version: 6.38.6
   repository: file://./charts/grafana
 - condition: hardenedKubelet.enabled
   name: hardenedKubelet
