@@ -55,9 +55,6 @@ dependencies:
 - condition: nodeExporter.enabled
   name: prometheus-node-exporter
   repository: file://./charts/prometheus-node-exporter
-- condition: rancher-monitoring-crd.enabled
-  name: rancher-monitoring-crd
-  repository: file://./charts/rancher-monitoring-crd
 - condition: rke2Etcd.enabled
   name: rke2ControllerManager
   repository: file://./charts/rke2ControllerManager

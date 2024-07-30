@@ -2320,11 +2320,6 @@ kube-state-metrics:
 nodeExporter:
   enabled: true
 
-## Deploy the CRDs used by rancher-monitoring.
-##
-rancher-monitoring-crd:
-  enabled: true
-
 ## Configuration for prometheus-node-exporter subchart
 ##
 prometheus-node-exporter:
