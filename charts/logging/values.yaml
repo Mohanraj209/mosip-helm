@@ -232,3 +232,39 @@ fluentbit:
 # this object will be merged with every logging CR created by this chart. Any fields that collide with fields from the
 # settings above will be overridden. Any fields that collide with fields set in the files in `templates/loggings` will
 # be ignored.
+
+## Configure extra options for liveness and readiness probes
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+##
+startupProbe:
+  enabled: true
+  httpGet:
+    path: /v1/packetcreator/actuator/health
+    port: 8080
+  initialDelaySeconds: 0
+  periodSeconds: 20
+  timeoutSeconds: 5
+  failureThreshold: 60
+  successThreshold: 1
+
+livenessProbe:
+  enabled: true
+  httpGet:
+    path: /v1/packetcreator/actuator/health
+    port: 8080
+  initialDelaySeconds: 20
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+
+readinessProbe:
+  enabled: true
+  httpGet:
+    path: /v1/packetcreator/actuator/health
+    port: 8080
+  initialDelaySeconds: 0
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
