@@ -116,12 +116,15 @@ description: Collects several related Helm charts, Grafana dashboards, and Prome
 home: https://github.com/prometheus-operator/kube-prometheus
 icon: https://raw.githubusercontent.com/prometheus/prometheus.github.io/master/assets/prometheus_logo-cb55bb5c346.png
 keywords:
+- mosip
 - operator
 - prometheus
 - kube-prometheus
 - monitoring
 kubeVersion: '>=1.16.0-0'
 maintainers:
+- email: info@mosip.io
+  name: MOSIP
 - email: andrew@quadcorps.co.uk
   name: andrewgkew
 - email: cedric@desaintmartin.fr

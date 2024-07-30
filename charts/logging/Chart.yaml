@@ -17,8 +17,13 @@ description: Collects and filter logs using highly configurable CRDs. Powered by
   Cloud Logging Operator.
 icon: https://charts.rancher.io/assets/logos/logging.svg
 keywords:
+- mosip
 - logging
 - monitoring
 - security
 name: rancher-logging
 version: 102.0.3+up3.17.10
+maintainers:
+  - email: info@mosip.io
+    name: MOSIP
+home: https://mosip.io
